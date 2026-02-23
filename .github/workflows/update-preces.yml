@@ -28,7 +28,7 @@ jobs:
 
       - name: Rodar crawler de preças
         run: |
-          python preces_crawler.py
+          python preces_crawler.py $(date -d 'today' +%Y-%m-%d)
 
       - name: Configurar usuário do Git
         run: |

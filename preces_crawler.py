@@ -387,50 +387,39 @@ def find_pdf_arqbrasilia(target_date):
     """Tenta encontrar PDF no site da Arquidiocese de Brasília."""
     print(f"  Buscando PDF em arqbrasilia.com.br...")
 
-    # Padrão de URL observado
     year = target_date.year
     month = target_date.month
-    month_names = ['', 'janeiro', 'fevereiro', 'marco', 'abril', 'maio', 'junho',
-                   'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
-
-    # Tentar vários padrões de URL comuns em sites WordPress
-    date_str = target_date.strftime("%d-%m-%Y")
-    date_str2 = target_date.strftime("%d-%m-%y")
-    date_str3 = target_date.strftime("%Y%m%d")
+    day = target_date.day
     month_str = f"{year}/{str(month).zfill(2)}"
+    date_str = target_date.strftime("%d-%m-%Y")
 
-    base_urls = [
-        f"https://arqbrasilia.com.br/wp-content/uploads/{month_str}/",
-    ]
-
-    # Primeiro tentar acessar a página do folheto
-    page_url = "https://arqbrasilia.com.br/o-povo-de-deus/"
-    html = download_page(page_url)
-    if html:
-        # Procurar links PDF na página que contenham a data
-        pdf_pattern = r'href=["\']([^"\']*\.pdf)["\']'
-        pdf_links = re.findall(pdf_pattern, html, re.IGNORECASE)
-        for link in pdf_links:
-            link_lower = link.lower()
-            # Check se o link contém a data ou referência ao domingo
-            if (date_str.replace('-', '') in link_lower or
-                date_str in link_lower or
-                'quaresma' in link_lower or
-                target_date.strftime('%d_%m') in link_lower):
-                full_url = link if link.startswith('http') else f"https://arqbrasilia.com.br{link}"
+    upload_dir = f"https://arqbrasilia.com.br/wp-content/uploads/{month_str}/"
+    print(f"    Acessando: {upload_dir}")
+    
+    try:
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+        req = urllib.request.Request(upload_dir, headers=headers)
+        with urllib.request.urlopen(req, context=ctx, timeout=10) as resp:
+            html = resp.read().decode('utf-8', errors='replace')
+            
+            # Padrão: "NN-Povo-Deus-61-DD_MM_"
+            pattern = rf'\d+-Povo-Deus-61-{day:02d}_{month:02d}[^<]*\.pdf'
+            match = re.search(pattern, html, re.IGNORECASE)
+            if match:
+                filename = match.group(0)
+                full_url = f"{upload_dir}{filename}"
                 pdf_path = os.path.join(PDF_CACHE_DIR, f"arqbrasilia_{date_str}.pdf")
+                print(f"    Encontrado: {filename}")
                 if download_file(full_url, pdf_path):
                     return pdf_path
-
-        # Tentar todos os PDFs da página e ver qual tem a data certa
-        for link in pdf_links:
-            if 'povo' in link.lower() or 'folheto' in link.lower() or 'liturgi' in link.lower():
-                full_url = link if link.startswith('http') else f"https://arqbrasilia.com.br{link}"
-                pdf_path = os.path.join(PDF_CACHE_DIR, f"arqbrasilia_{date_str}.pdf")
-                if download_file(full_url, pdf_path):
-                    return pdf_path
-
+    except Exception as e:
+        print(f"    [AVISO] Acesso ao diretório falhou: {e}")
+    
     return None
+
 
 def find_pdf_diocesecampanha(target_date):
     """Tenta encontrar PDF no site da Diocese da Campanha."""

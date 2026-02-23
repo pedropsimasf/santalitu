@@ -1,6 +1,6 @@
 {
   "data": "2026-02-22",
-  "domingo": "I Domingo da Quaresma",
+  "domingo": "1º Domingo da Quaresma",
   "ano_liturgico": "B",
   "ciclo": "quaresma",
   "cor": "roxo",
@@ -20,7 +20,7 @@
     },
     {
       "numero": 3,
-      "tema": "Pelos que sofrem as tentações e provações",
+      "tema": "Pelos que sofrem as tentações",
       "texto": "Pelos que sofrem as tentações e provações da vida: para que encontrem no Senhor a força para vencer o mal e perseverar no bem. Oremos."
     },
     {
@@ -29,5 +29,5 @@
       "texto": "Para que nós, participantes desta graça sacramental, fortalecidos pela Igreja e renovação incessante do Evangelho, marchemos firmes e fiéis ao Senhor, rejeitando tudo aquilo que divide, e possamos promover a unidade e a solidariedade. Oremos."
     }
   ],
-  "atualizado_em": "2026-02-23T23:28:00Z"
+  "atualizado_em": "2026-02-23T23:55:00Z"
 }

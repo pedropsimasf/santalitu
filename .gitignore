@@ -1,0 +1,11 @@
+# Cache do crawler
+pdf_cache/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Sistema
+.DS_Store
+Thumbs.db

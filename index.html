@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SantaLitu">
+  <meta name="theme-color" content="#5b2d8e">
+  <meta name="description" content="SantaLitu — Acompanhe toda a Santa Missa em uma única tela.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet">
+  <title>SantaLitu — Liturgia Diária</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="appHeader">
+    <div class="header-top">
+      <div class="header-brand">
+        <span class="brand-cross">✦</span>
+        <span class="brand-name">SantaLitu</span>
+      </div>
+      <div class="font-controls">
+        <button class="font-btn" id="fontDown">A−</button>
+        <span class="font-size-label" id="fontLabel">16px</span>
+        <button class="font-btn" id="fontUp">A+</button>
+      </div>
+    </div>
+    <div class="header-sub" id="headerSub">Liturgia Diária | Quaresma</div>
+    <div class="date-nav">
+      <button class="date-arrow" id="prevDay">‹</button>
+      <div class="date-display" id="dateDisplay">
+        <input type="date" id="datePicker" class="date-input">
+      </div>
+      <button class="date-arrow" id="nextDay">›</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-feast" id="heroFeast"></div>
+    <div class="hero-badges">
+      <span class="lit-badge" id="colorBadge"><span class="lit-dot" id="litDot"></span><span
+          id="colorLabel"></span></span>
+      <span class="lit-badge" id="credoBadge" style="display:none;">Credo</span>
+    </div>
+  </section>
+
+  <div id="offlineArea"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="content" id="massContent">
+
+    <!-- INTRODUÇÃO -->
+    <div class="section-card" id="sec-intro">
+      <button class="section-toggle" data-section="intro-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Introdução ao Mistério Celebrado</span>
+      </button>
+      <div class="section-body collapsed" id="intro-body">
+        <p class="intro-text" id="introText"></p>
+      </div>
+    </div>
+
+    <!-- ANTÍFONA DE ENTRADA -->
+    <div class="section-card" id="sec-antifona">
+      <button class="section-toggle" data-section="antifona-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Antífona de Entrada</span>
+      </button>
+      <div class="section-body collapsed" id="antifona-body">
+        <p class="antiphon" id="antifonaEntrada"></p>
+      </div>
+    </div>
+
+    <!-- SAUDAÇÃO -->
+    <div class="section-card" id="sec-saudacao">
+      <button class="section-toggle" data-section="saudacao-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Saudação</span>
+      </button>
+      <div class="section-body collapsed" id="saudacao-body">
+        <div class="dialogue"><span class="label-p">P.</span> Em nome do Pai e do Filho e do Espírito Santo.</div>
+        <div class="response"><strong>T. Amém.</strong></div>
+        <div class="dialogue" id="saudacaoVar"><span class="label-p">P.</span> <span id="saudacaoTexto">A graça de nosso
+            Senhor Jesus Cristo, o amor do Pai e a comunhão do Espírito Santo estejam convosco.</span></div>
+        <div class="response"><strong>T. Bendito seja Deus, que nos reuniu no amor de Cristo.</strong></div>
+      </div>
+    </div>
+
+    <!-- ATO PENITENCIAL -->
+    <div class="section-card" id="sec-penitencial">
+      <button class="section-toggle" data-section="penitencial-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Ato Penitencial</span>
+      </button>
+      <div class="section-body collapsed" id="penitencial-body">
+        <div id="atoPenitencialContent"></div>
+      </div>
+    </div>
+
+    <!-- NOTA GLÓRIA -->
+    <div class="section-card note-card" id="gloriaNote" style="display:none;">
+      <div class="liturgical-note" id="gloriaRubric"></div>
+    </div>
+
+    <!-- GLÓRIA -->
+    <div class="section-card" id="sec-gloria" style="display:none;">
+      <button class="section-toggle" data-section="gloria-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Glória</span>
+      </button>
+      <div class="section-body collapsed" id="gloria-body">
+        <div class="response"><strong>Glória a Deus nas alturas</strong> e paz na terra aos homens por ele
+          amados.<br><br>Senhor Deus, Rei dos céus, Deus Pai todo-poderoso: nós vos louvamos, nós vos bendizemos, nós
+          vos adoramos, nós vos glorificamos, nós vos damos graças por vossa imensa glória.<br><br>Senhor Jesus Cristo,
+          Filho Unigênito, Senhor Deus, Cordeiro de Deus, Filho de Deus Pai: Vós que tirais o pecado do mundo, tende
+          piedade de nós. Vós que tirais o pecado do mundo, acolhei a nossa súplica. Vós que estais à direita do Pai,
+          tende piedade de nós.<br><br>Só vós sois o Santo, só vós, o Senhor, só vós, o Altíssimo, Jesus Cristo, com o
+          Espírito Santo, na glória de Deus Pai. <strong>Amém.</strong></div>
+      </div>
+    </div>
+
+    <!-- ORAÇÃO COLETA -->
+    <div class="section-card" id="sec-coleta">
+      <button class="section-toggle" data-section="coleta-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Oração Coleta</span>
+      </button>
+      <div class="section-body collapsed" id="coleta-body">
+        <p class="prayer" id="oracaoColeta"></p>
+        <div class="response"><strong>T. Amém.</strong></div>
+      </div>
+    </div>
+
+    <!-- DIVISOR LITURGIA DA PALAVRA -->
+    <div class="part-divider"><span>Liturgia da Palavra</span></div>
+
+    <!-- 1ª LEITURA -->
+    <div class="section-card" id="sec-leitura1">
+      <button class="section-toggle" data-section="leitura1-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">1ª Leitura</span>
+        <span class="toggle-ref" id="leitura1RefBtn"></span>
+      </button>
+      <div class="section-body collapsed" id="leitura1-body">
+        <p class="ref" id="leitura1Ref"></p>
+        <p class="reading-subtitle" id="leitura1Titulo"></p>
+        <div class="reading-text" id="leitura1Texto"></div>
+        <div class="dialogue"><span class="label-t">—</span> Palavra do Senhor.</div>
+        <div class="response"><strong>T. Graças a Deus.</strong></div>
+      </div>
+    </div>
+
+    <!-- SALMO -->
+    <div class="section-card" id="sec-salmo">
+      <button class="section-toggle" data-section="salmo-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Salmo Responsorial</span>
+      </button>
+      <div class="section-body collapsed" id="salmo-body">
+        <p class="ref" id="salmoRef"></p>
+        <div class="refrain" id="salmoRefrao"></div>
+        <div id="salmoVerses"></div>
+      </div>
+    </div>
+
+    <!-- 2ª LEITURA -->
+    <div class="section-card" id="sec-leitura2" style="display:none;">
+      <button class="section-toggle" data-section="leitura2-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">2ª Leitura</span>
+        <span class="toggle-ref" id="leitura2RefBtn"></span>
+      </button>
+      <div class="section-body collapsed" id="leitura2-body">
+        <p class="ref" id="leitura2Ref"></p>
+        <p class="reading-subtitle" id="leitura2Titulo"></p>
+        <div class="reading-text" id="leitura2Texto"></div>
+        <div class="dialogue"><span class="label-t">—</span> Palavra do Senhor.</div>
+        <div class="response"><strong>T. Graças a Deus.</strong></div>
+      </div>
+    </div>
+
+    <!-- ACLAMAÇÃO -->
+    <div class="section-card" id="sec-aclamacao">
+      <button class="section-toggle" data-section="aclamacao-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title" id="aclamacaoTitle">Aclamação ao Evangelho</span>
+      </button>
+      <div class="section-body collapsed" id="aclamacao-body">
+        <div class="response" id="aclamacaoTexto"></div>
+      </div>
+    </div>
+
+    <!-- EVANGELHO -->
+    <div class="section-card" id="sec-evangelho">
+      <button class="section-toggle" data-section="evangelho-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Evangelho</span>
+        <span class="toggle-ref" id="evangelhoRefBtn"></span>
+      </button>
+      <div class="section-body collapsed" id="evangelho-body">
+        <p class="ref" id="evangelhoRef"></p>
+        <div class="dialogue"><span class="label-p">P.</span> O Senhor esteja convosco.</div>
+        <div class="response"><strong>T. Ele está no meio de nós.</strong></div>
+        <div class="dialogue"><span class="label-p">P.</span> Proclamação do Evangelho de Jesus Cristo ✠ segundo <span
+            id="evangelista">São Mateus</span>.</div>
+        <div class="response"><strong>T. Glória a vós, Senhor!</strong></div>
+        <div class="reading-text" id="evangelhoTexto"></div>
+        <div class="dialogue"><span class="label-t">—</span> Palavra da Salvação.</div>
+        <div class="response"><strong>T. Glória a vós, Senhor!</strong></div>
+      </div>
+    </div>
+
+    <!-- HOMILIA -->
+    <div class="section-card" id="sec-homilia">
+      <button class="section-toggle" data-section="homilia-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Homilia</span>
+      </button>
+      <div class="section-body collapsed" id="homilia-body">
+        <div class="rubric">O sacerdote (ou diácono) faz a homilia, refletindo sobre as leituras proclamadas e sua
+          aplicação na vida dos fiéis.</div>
+        <div class="liturgical-note"><strong>Momento de escuta:</strong> A homilia é parte integrante da Liturgia da
+          Palavra. Os fiéis acolhem em silêncio a reflexão do celebrante.</div>
+      </div>
+    </div>
+
+    <!-- PROFISSÃO DE FÉ -->
+    <div class="section-card" id="sec-credo">
+      <button class="section-toggle" data-section="credo-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Profissão de Fé (Credo)</span>
+      </button>
+      <div class="section-body collapsed" id="credo-body">
+        <div class="rubric" id="credoRubric"></div>
+        <div class="response" id="credoText">
+          <strong>Creio em Deus Pai todo-poderoso,</strong> Criador do céu e da terra.<br><br>
+          E em Jesus Cristo, seu único Filho, nosso Senhor, que foi concebido pelo poder do Espírito Santo; nasceu da
+          Virgem Maria; padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado; desceu à mansão dos mortos;
+          ressuscitou ao terceiro dia; subiu aos céus; está sentado à direita de Deus Pai todo-poderoso, de onde há de
+          vir a julgar os vivos e os mortos.<br><br>
+          <strong>Creio no Espírito Santo,</strong> na Santa Igreja Católica, na comunhão dos santos, na remissão dos
+          pecados, na ressurreição da carne, na vida eterna. <strong>Amém.</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORAÇÃO DOS FIÉIS (PRECES) -->
+    <div class="section-card" id="sec-preces">
+      <button class="section-toggle" data-section="preces-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Oração dos Fiéis (Preces)</span>
+      </button>
+      <div class="section-body collapsed" id="preces-body">
+        <div id="precesContent"></div>
+      </div>
+    </div>
+
+    <!-- DIVISOR LITURGIA EUCARÍSTICA -->
+    <div class="part-divider"><span>Liturgia Eucarística</span></div>
+
+    <!-- PREPARAÇÃO DAS OFERENDAS -->
+    <div class="section-card" id="sec-ofertorio">
+      <button class="section-toggle" data-section="ofertorio-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Preparação das Oferendas</span>
+      </button>
+      <div class="section-body collapsed" id="ofertorio-body">
+        <div class="rubric">O sacerdote prepara o altar e recebe as oferendas de pão e vinho.</div>
+        <div class="dialogue"><span class="label-p">P.</span> Bendito sejais, Senhor, Deus do universo, pelo pão que
+          recebemos de vossa bondade, fruto da terra e do trabalho humano, que apresentamos e para nós se vai tornar pão
+          da vida.</div>
+        <div class="response"><strong>T. Bendito seja Deus para sempre!</strong></div>
+        <div class="dialogue"><span class="label-p">P.</span> Bendito sejais, Senhor, Deus do universo, pelo vinho que
+          recebemos de vossa bondade, fruto da videira e do trabalho humano, que apresentamos e para nós se vai tornar
+          vinho da salvação.</div>
+        <div class="response"><strong>T. Bendito seja Deus para sempre!</strong></div>
+        <div class="separator"></div>
+        <div class="dialogue"><span class="label-p">P.</span> Orai, irmãos e irmãs, para que o nosso sacrifício seja
+          aceito por Deus Pai todo-poderoso.</div>
+        <div class="response"><strong>T. Receba o Senhor por tuas mãos este sacrifício, para glória do seu nome, para
+            nosso bem e de toda a sua Santa Igreja.</strong></div>
+      </div>
+    </div>
+
+    <!-- ORAÇÃO SOBRE AS OFERENDAS -->
+    <div class="section-card" id="sec-oferendas">
+      <button class="section-toggle" data-section="oferendas-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Oração sobre as Oferendas</span>
+      </button>
+      <div class="section-body collapsed" id="oferendas-body">
+        <p class="prayer" id="oracaoOferendas"></p>
+        <div class="response"><strong>T. Amém.</strong></div>
+      </div>
+    </div>
+
+    <!-- PREFÁCIO -->
+    <div class="section-card" id="sec-prefacio">
+      <button class="section-toggle" data-section="prefacio-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Prefácio e Santo</span>
+      </button>
+      <div class="section-body collapsed" id="prefacio-body">
+        <div class="dialogue"><span class="label-p">P.</span> O Senhor esteja convosco.</div>
+        <div class="response"><strong>T. Ele está no meio de nós.</strong></div>
+        <div class="dialogue"><span class="label-p">P.</span> Corações ao alto.</div>
+        <div class="response"><strong>T. O nosso coração está em Deus.</strong></div>
+        <div class="dialogue"><span class="label-p">P.</span> Demos graças ao Senhor, nosso Deus.</div>
+        <div class="response"><strong>T. É nosso dever e nossa salvação.</strong></div>
+        <div class="separator"></div>
+        <div class="response"><strong>Santo, Santo, Santo,</strong> Senhor, Deus do universo!<br>O céu e a terra
+          proclamam a vossa glória.<br><strong>Hosana nas alturas!</strong><br>Bendito o que vem em nome do
+          Senhor!<br><strong>Hosana nas alturas!</strong></div>
+      </div>
+    </div>
+
+    <!-- ORAÇÃO EUCARÍSTICA III -->
+    <div class="section-card" id="sec-eucaristica">
+      <button class="section-toggle" data-section="eucaristica-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title" id="oeTitulo">Oração Eucarística III</span>
+      </button>
+      <div class="section-body collapsed" id="eucaristica-body">
+        <div id="oeContent"><!-- carregado dinamicamente pelo app.js --></div>
+      </div>
+    </div>
+
+    <!-- DIVISOR RITO DA COMUNHÃO -->
+    <div class="part-divider"><span>Rito da Comunhão</span></div>
+
+    <!-- PAI NOSSO -->
+    <div class="section-card" id="sec-painosso">
+      <button class="section-toggle" data-section="painosso-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Pai Nosso</span>
+      </button>
+      <div class="section-body collapsed" id="painosso-body">
+        <div class="dialogue"><span class="label-p">P.</span> Fiéis à recomendação do Salvador e ensinados pela sua
+          divina palavra, ousamos dizer:</div>
+        <div class="response"><strong>Pai nosso, que estais nos céus,</strong><br>santificado seja o vosso
+          nome,<br>venha a nós o vosso reino,<br>seja feita a vossa vontade,<br>assim na terra como no
+          céu.<br><br><strong>O pão nosso de cada dia nos dai hoje,</strong><br>perdoai-nos as nossas ofensas,<br>assim
+          como nós perdoamos<br>a quem nos tem ofendido;<br>e não nos deixeis cair em tentação,<br>mas livrai-nos do
+          mal.</div>
+        <div class="dialogue"><span class="label-p">P.</span> Livrai-nos de todos os males, ó Pai, e dai-nos hoje a
+          vossa paz. Pela vossa misericórdia, livrai-nos do pecado e de toda perturbação, enquanto, cheios de esperança,
+          aguardamos a vinda do Salvador, Jesus Cristo, nosso Senhor.</div>
+        <div class="response"><strong>T. Vosso é o reino, o poder e a glória para sempre!</strong></div>
+      </div>
+    </div>
+
+    <!-- RITO DA PAZ -->
+    <div class="section-card" id="sec-paz">
+      <button class="section-toggle" data-section="paz-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Rito da Paz</span>
+      </button>
+      <div class="section-body collapsed" id="paz-body">
+        <div class="dialogue"><span class="label-p">P.</span> Senhor Jesus Cristo, dissestes aos vossos apóstolos: eu
+          vos deixo a paz, eu vos dou a minha paz. Não olheis os nossos pecados, mas a fé que anima vossa Igreja; e
+          dai-lhe, segundo o vosso desejo, a paz e a unidade. Vós, que sois Deus, com o Pai e o Espírito Santo.</div>
+        <div class="response"><strong>T. Amém.</strong></div>
+        <div class="dialogue"><span class="label-p">P.</span> A paz do Senhor esteja sempre convosco.</div>
+        <div class="response"><strong>T. O amor de Cristo nos uniu.</strong></div>
+        <div class="rubric">O diácono ou o sacerdote pode acrescentar:</div>
+        <div class="dialogue"><span class="label-p">P.</span> Saudai-vos na paz de Cristo.</div>
+        <div class="rubric">Os fiéis trocam entre si um gesto de paz, conforme o costume local.</div>
+      </div>
+    </div>
+
+    <!-- CORDEIRO DE DEUS -->
+    <div class="section-card" id="sec-cordeiro">
+      <button class="section-toggle" data-section="cordeiro-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Cordeiro de Deus</span>
+      </button>
+      <div class="section-body collapsed" id="cordeiro-body">
+        <div class="response"><strong>Cordeiro de Deus, que tirais o pecado do mundo,</strong> tende piedade de
+          nós.<br><strong>Cordeiro de Deus, que tirais o pecado do mundo,</strong> tende piedade de
+          nós.<br><strong>Cordeiro de Deus, que tirais o pecado do mundo,</strong> dai-nos a paz.</div>
+      </div>
+    </div>
+
+    <!-- COMUNHÃO -->
+    <div class="section-card" id="sec-comungar">
+      <button class="section-toggle" data-section="comungar-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Comunhão</span>
+      </button>
+      <div class="section-body collapsed" id="comungar-body">
+        <div class="dialogue"><span class="label-p">P.</span> Eis o Cordeiro de Deus, que tira o pecado do mundo.
+          Felizes os convidados para a Ceia do Senhor.</div>
+        <div class="response"><strong>T. Senhor, eu não sou digno(a) de que entreis em minha morada, mas dizei uma
+            palavra e serei salvo(a).</strong></div>
+        <div class="rubric">O sacerdote comunga e, em seguida, distribui a comunhão aos fiéis.</div>
+        <div class="liturgical-note"><strong>Oração:</strong> Ao receber a comunhão, o fiel pode rezar em silêncio,
+          acolhendo a presença de Cristo em seu coração.</div>
+      </div>
+    </div>
+
+    <!-- ANTÍFONA DA COMUNHÃO -->
+    <div class="section-card" id="sec-antcomunhao">
+      <button class="section-toggle" data-section="antcomunhao-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Antífona da Comunhão</span>
+      </button>
+      <div class="section-body collapsed" id="antcomunhao-body">
+        <p class="antiphon" id="antifonaComunhao"></p>
+      </div>
+    </div>
+
+    <!-- ORAÇÃO PÓS-COMUNHÃO -->
+    <div class="section-card" id="sec-poscomunhao">
+      <button class="section-toggle" data-section="poscomunhao-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Oração Pós-Comunhão</span>
+      </button>
+      <div class="section-body collapsed" id="poscomunhao-body">
+        <p class="prayer" id="oracaoPosComunhao"></p>
+        <div class="response"><strong>T. Amém.</strong></div>
+      </div>
+    </div>
+
+    <!-- DIVISOR RITOS FINAIS -->
+    <div class="part-divider"><span>Ritos Finais</span></div>
+
+    <!-- BÊNÇÃO E DESPEDIDA -->
+    <div class="section-card" id="sec-final">
+      <button class="section-toggle" data-section="final-body">
+        <span class="toggle-icon">＋</span>
+        <span class="toggle-title">Bênção Final e Despedida</span>
+      </button>
+      <div class="section-body collapsed" id="final-body">
+        <div class="dialogue"><span class="label-p">P.</span> O Senhor esteja convosco.</div>
+        <div class="response"><strong>T. Ele está no meio de nós.</strong></div>
+        <div class="dialogue"><span class="label-p">P.</span> Abençoe-vos Deus todo-poderoso, Pai e Filho ✠ e Espírito
+          Santo.</div>
+        <div class="response"><strong>T. Amém.</strong></div>
+        <div class="separator"></div>
+        <div class="dialogue"><span class="label-p">P.</span> Ide em paz e o Senhor vos acompanhe.</div>
+        <div class="response"><strong>T. Graças a Deus.</strong></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="bnav-btn active" data-mode="missa"><span class="bnav-icon">📖</span><span>Missa
+        Completa</span></button>
+    <button class="bnav-btn" data-mode="leituras"><span class="bnav-icon">☰</span><span>Só Leituras</span></button>
+    <button class="bnav-btn" data-mode="devocao"><span class="bnav-icon">♥</span><span>Devoção</span></button>
+  </nav>
+
+  <!-- DATE PICKER OVERLAY -->
+  <div class="overlay" id="dateOverlay" style="display:none;">
+    <div class="overlay-box">
+      <h3>Escolher Data</h3>
+      <input type="date" id="dateOverlayInput">
+      <button id="dateOverlayGo">Ir</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

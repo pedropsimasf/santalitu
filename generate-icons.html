@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head><title>Gerar Ícones</title></head>
+<body>
+<h2>Gerar ícones da PWA</h2>
+<p>Clique nos botões abaixo para baixar os ícones. Salve-os na pasta <code>icons/</code>.</p>
+<canvas id="c192" width="192" height="192"></canvas>
+<canvas id="c512" width="512" height="512"></canvas>
+<br>
+<button onclick="download(192)">Baixar icon-192.png</button>
+<button onclick="download(512)">Baixar icon-512.png</button>
+<script>
+function drawIcon(size) {
+  const c = document.getElementById('c' + size);
+  const ctx = c.getContext('2d');
+  const s = size / 512;
+
+  // Background
+  ctx.fillStyle = '#6b0f1a';
+  roundRect(ctx, 0, 0, size, size, 80 * s);
+  ctx.fill();
+
+  // Border
+  ctx.strokeStyle = '#d4a840';
+  ctx.lineWidth = 3 * s;
+  ctx.globalAlpha = 0.5;
+  roundRect(ctx, 20*s, 20*s, size-40*s, size-40*s, 60*s);
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+
+  // Cross
+  ctx.strokeStyle = '#faf6ef';
+  ctx.lineWidth = 28 * s;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(256*s, 100*s);
+  ctx.lineTo(256*s, 340*s);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(180*s, 170*s);
+  ctx.lineTo(332*s, 170*s);
+  ctx.stroke();
+
+  // Book
+  ctx.strokeStyle = '#d4a840';
+  ctx.lineWidth = 8 * s;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  ctx.moveTo(160*s, 350*s);
+  ctx.lineTo(256*s, 380*s);
+  ctx.lineTo(352*s, 350*s);
+  ctx.lineTo(352*s, 420*s);
+  ctx.lineTo(256*s, 450*s);
+  ctx.lineTo(160*s, 420*s);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.lineWidth = 4 * s;
+  ctx.beginPath();
+  ctx.moveTo(256*s, 380*s);
+  ctx.lineTo(256*s, 450*s);
+  ctx.stroke();
+
+  // Stars
+  ctx.fillStyle = '#d4a840';
+  ctx.font = `${24*s}px serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('\u2726', 110*s, 310*s);
+  ctx.fillText('\u2726', 402*s, 310*s);
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function download(size) {
+  const c = document.getElementById('c' + size);
+  const link = document.createElement('a');
+  link.download = 'icon-' + size + '.png';
+  link.href = c.toDataURL('image/png');
+  link.click();
+}
+
+drawIcon(192);
+drawIcon(512);
+</script>
+</body>
+</html>

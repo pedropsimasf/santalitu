@@ -1,0 +1,33 @@
+{
+  "data": "2026-02-22",
+  "domingo": "I Domingo da Quaresma",
+  "ano_liturgico": "B",
+  "ciclo": "quaresma",
+  "cor": "roxo",
+  "fonte": "Arquidiocese de Brasília - O Povo de Deus",
+  "oracao_eucaristica": "III",
+  "resposta": "Senhor, ouvi a nossa prece.",
+  "intencoes": [
+    {
+      "numero": 1,
+      "tema": "Pela santa Igreja",
+      "texto": "Pela santa Igreja: para que, neste tempo de Quaresma, seja sinal de conversão e esperança para todos os povos. Oremos."
+    },
+    {
+      "numero": 2,
+      "tema": "Pelos que governam as nações",
+      "texto": "Pelos que governam as nações: para que busquem sempre a justiça, a verdade e a paz, combatendo as tentações do poder e da corrupção. Oremos."
+    },
+    {
+      "numero": 3,
+      "tema": "Pelos que sofrem as tentações e provações",
+      "texto": "Pelos que sofrem as tentações e provações da vida: para que encontrem no Senhor a força para vencer o mal e perseverar no bem. Oremos."
+    },
+    {
+      "numero": 4,
+      "tema": "Para nós e para unidade",
+      "texto": "Para que nós, participantes desta graça sacramental, fortalecidos pela Igreja e renovação incessante do Evangelho, marchemos firmes e fiéis ao Senhor, rejeitando tudo aquilo que divide, e possamos promover a unidade e a solidariedade. Oremos."
+    }
+  ],
+  "atualizado_em": "2026-02-23T23:28:00Z"
+}

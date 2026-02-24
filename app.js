@@ -70,7 +70,7 @@
 
     // 1. Tentar arquivo local preces_data/
     try {
-      const r = await fetch(`preces_data/preces_${iso}.json`, { signal: AbortSignal.timeout(3000) });
+      const r = await fetch(`preces_data/preces_${iso}.json?v=${Date.now()}`, { signal: AbortSignal.timeout(3000), cache: 'no-cache' });
       if (r.ok) {
         const data = await r.json();
         console.log('[fetchPrecesJSON] ✓ Arquivo local carregado:', iso, '| OE:', data.oracao_eucaristica);
@@ -83,7 +83,7 @@
 
     // 2. Tentar API do preces_server.py
     try {
-      const r = await fetch(`http://127.0.0.1:8082/preces/${iso}`, { signal: AbortSignal.timeout(3000) });
+      const r = await fetch(`http://127.0.0.1:8082/preces/${iso}?v=${Date.now()}`, { signal: AbortSignal.timeout(3000), cache: 'no-cache' });
       if (r.ok) {
         const data = await r.json();
         if (!data.error) {

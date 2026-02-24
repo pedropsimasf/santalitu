@@ -188,7 +188,7 @@
     el.innerHTML = getPrecesFallback(data);
     console.log('Preces: usando fallback inline');
     // Default OE III para Quaresma, II para outros tempos
-    setOracaoEucaristica(isQuaresma(currentDate) ? 'III' : 'III');
+    setOracaoEucaristica(isQuaresma(currentDate) ? 'III' : 'II');
   }
 
   // ===== ORAÇÃO EUCARÍSTICA DINÂMICA =====

@@ -6,28 +6,33 @@
   "cor": "roxo",
   "fonte": "Arquidiocese de Brasília - O Povo de Deus",
   "oracao_eucaristica": "III",
-  "resposta": "Senhor, escutai a nossa prece.",
+  "resposta": "Assisti, ó Senhor, o vosso povo.",
   "intencoes": [
     {
       "numero": 1,
-      "tema": "Para nós e unidade",
-      "texto": "Para que nós, participantes desta graça e reconhecendo incessantemente a Igreja, fortalecidos pela Eucaristia, saibamos rejeitar tudo aquilo que divide; possamos promover a unidade e continuemos a nossa conversão a Deus. Oremos."
+      "tema": "Pela Igreja",
+      "texto": "Pela Igreja: para que, neste tempo de Quaresma, seja transparente e acolhedora, ajudando as pessoas a encontrar o caminho da conversão."
     },
     {
       "numero": 2,
-      "tema": "Fortalecidos pelo Evangelho",
-      "texto": "Para que nos, fortalecidos pelo Evangelho, marquemos formas e fiéis ao Evangelho, participando liturgia, de modo que a nossa vida corresponda às quais iniciamos nos oferendas com a Páscoa. Por Cristo, nosso Senhor."
+      "tema": "Pelos governantes",
+      "texto": "Pelos governantes: para que se empenhem na promoção da justiça e da paz, combatendo as desigualdades e a fome no mundo."
     },
     {
       "numero": 3,
-      "tema": "Pelos que sofrem tentações",
-      "texto": "Pelos que sofrem com as tentações e dificuldades da vida, para que encontrem em Deus a força e a função de governar com bondade e a frente do Evangelho, celebrar estes mistérios para nosso bem e de toda a sua santa Igreja."
+      "tema": "Pelas famílias",
+      "texto": "Pelas famílias: para que sejam espaços de acolhida, diálogo e partilha, vivendo com simplicidade e generosidade."
     },
     {
       "numero": 4,
-      "tema": "Sacrifício aceito",
-      "texto": "Para todo sacrifício seja aceito por Deus, Pai todo-poderoso, para glória do seu nome, sacrifício, para a nossa e de toda a sua santa Igreja."
+      "tema": "Pelo sacrifício",
+      "texto": "Pelo todo sacrifício seja aceito por Deus, para nosso bem e de toda a sua santa Igreja."
+    },
+    {
+      "numero": 5,
+      "tema": "Por nós aqui reunidos",
+      "texto": "Por nós aqui reunidos: para que a vivência desta Quaresma nos transforme em verdadeiros discípulos missionários de Jesus Cristo."
     }
   ],
-  "atualizado_em": "2026-02-24T00:00:00Z"
+  "atualizado_em": "2026-02-24T00:05:00Z"
 }

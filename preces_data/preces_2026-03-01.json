@@ -1,13 +1,38 @@
 {
-  "date": "2026-03-01",
-  "liturgy": "Domingo - 1º Domingo da Quaresma",
-  "response": "Ó Senhor, venha a nós a vossa graça.",
-  "intentions": [
-    "Pela Igreja, peregrina neste mundo, com o Papa Leão, com o nosso bispo N., presbíteros e diáconos, religiosos e religiosas, leigos e leigas, para que deem passos concretos que revelem os sinais de conversão, motivando outros a fazerem o mesmo, rezemos.",
-    "Por aqueles que nos governam, para que, inspirados pelos exemplos de Jesus Cristo, possam defender os mais necessitados, os pobres e esquecidos, com políticas públicas que promovam sua dignidade, rezemos.",
-    "Pelos seminaristas, os noviços e as noviças, para que encontrem formadores que vivam a alegria do Evangelho e os preparem com sabedoria para a sua missão, rezemos.",
-    "Pelos que sofrem com os desafios da vida presente, na família, no trabalho, nas relações, nos hospitais, nos asilos e em tantos outros ambientes; que possamos estar atentos e oferecer o nosso coração acolhedor a eles, rezemos.",
-    "Por esta Campanha da Fraternidade em prol de moradia digna para todas as pessoas, a fim de que esse empenho fraterno gere frutos de justiça social e solidariedade, rezemos."
+  "data": "2026-03-01",
+  "domingo": "1º Domingo da Quaresma",
+  "ano_liturgico": "B",
+  "ciclo": "quaresma",
+  "cor": "roxo",
+  "fonte": "Arquidiocese de Brasília - O Povo de Deus",
+  "oracao_eucaristica": "III",
+  "resposta": "Ó Senhor, venha a nós a vossa graça.",
+  "intencoes": [
+    {
+      "numero": 1,
+      "tema": "Pela Igreja",
+      "texto": "Pela Igreja, peregrina neste mundo, com o Papa Leão, com o nosso bispo N., presbíteros e diáconos, religiosos e religiosas, leigos e leigas, para que deem passos concretos que revelem os sinais de conversão, motivando outros a fazerem o mesmo, rezemos."
+    },
+    {
+      "numero": 2,
+      "tema": "Pelos governantes",
+      "texto": "Por aqueles que nos governam, para que, inspirados pelos exemplos de Jesus Cristo, possam defender os mais necessitados, os pobres e esquecidos, com políticas públicas que promovam sua dignidade, rezemos."
+    },
+    {
+      "numero": 3,
+      "tema": "Pelos seminaristas",
+      "texto": "Pelos seminaristas, os noviços e as noviças, para que encontrem formadores que vivam a alegria do Evangelho e os preparem com sabedoria para a sua missão, rezemos."
+    },
+    {
+      "numero": 4,
+      "tema": "Pelos que sofrem",
+      "texto": "Pelos que sofrem com os desafios da vida presente, na família, no trabalho, nas relações, nos hospitais, nos asilos e em tantos outros ambientes; que possamos estar atentos e oferecer o nosso coração acolhedor a eles, rezemos."
+    },
+    {
+      "numero": 5,
+      "tema": "Campanha da Fraternidade",
+      "texto": "Por esta Campanha da Fraternidade em prol de moradia digna para todas as pessoas, a fim de que esse empenho fraterno gere frutos de justiça social e solidariedade, rezemos."
+    }
   ],
-  "closing": "Deus de Misericórdia, como fruto da escuta atenta do vosso Filho, brotam de nossos corações essas preces, que a vós dirigimos hoje; dai-nos a graça de perseverar nos bons propósitos deste Tempo quaresmal. Por Cristo, vosso Filho e Senhor nosso. Amém."
+  "atualizado_em": "2026-02-24T14:04:00Z"
 }

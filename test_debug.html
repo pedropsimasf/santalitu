@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SantaLitu - Debug Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+    .debug-panel { background: white; padding: 15px; border-radius: 8px; margin: 10px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .debug-panel h2 { margin: 0 0 10px 0; color: #333; font-size: 16px; }
+    .log-output { background: #222; color: #0f0; padding: 10px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; height: 400px; overflow-y: auto; line-height: 1.4; }
+    .log-output div { margin: 2px 0; }
+    .log-error { color: #f00; }
+    .log-warn { color: #ff8800; }
+    .log-info { color: #0ff; }
+    .log-success { color: #0f0; }
+    button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    .test-info { background: #e7f3ff; padding: 10px; border-left: 4px solid #007bff; margin: 10px 0; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>🔍 SantaLitu - Debug Test (01/03/2026)</h1>
+  
+  <div class="test-info">
+    <strong>Teste:</strong> Carregando data 01/03/2026 (1º Domingo Quaresma) para verificar se Oração Eucarística II está sendo carregada do JSON<br>
+    <strong>JSON esperado:</strong> /preces_data/preces_2026-03-01.json com "oracao_eucaristica": "II"<br>
+    <strong>Problema:</strong> App mostrando OE III em vez de II
+  </div>
+  
+  <div class="debug-panel">
+    <h2>🎮 Controles</h2>
+    <button onclick="loadTestDate()">▶ Carregar 01/03/2026</button>
+    <button onclick="clearLogs()">🗑 Limpar Logs</button>
+    <button onclick="clearLocalStorage()">🔄 Limpar localStorage</button>
+    <button onclick="inspectCache()">🔍 Inspecionar Cache</button>
+  </div>
+  
+  <div class="debug-panel">
+    <h2>📋 Console Log Output</h2>
+    <div class="log-output" id="logOutput"></div>
+  </div>
+  
+  <div id="app" style="display:none;"></div>
+
+  <script>
+    // Capturar console.log
+    const logOutput = document.getElementById('logOutput');
+    const originalLog = console.log;
+    const originalWarn = console.warn;
+    const originalError = console.error;
+
+    function addLog(msg, type = 'info') {
+      const div = document.createElement('div');
+      const timestamp = new Date().toLocaleTimeString();
+      div.className = `log-${type}`;
+      div.textContent = `[${timestamp}] ${msg}`;
+      logOutput.appendChild(div);
+      logOutput.scrollTop = logOutput.scrollHeight;
+      originalLog(`[${type.toUpperCase()}] ${msg}`);
+    }
+
+    console.log = function(...args) {
+      addLog(args.join(' '), 'info');
+    };
+    console.warn = function(...args) {
+      addLog(args.join(' '), 'warn');
+    };
+    console.error = function(...args) {
+      addLog(args.join(' '), 'error');
+    };
+
+    function clearLogs() {
+      logOutput.innerHTML = '';
+      addLog('✓ Logs limpados', 'success');
+    }
+
+    function clearLocalStorage() {
+      const preces2026_03_01 = localStorage.getItem('preces_2026-03-01');
+      localStorage.removeItem('preces_2026-03-01');
+      addLog('✓ localStorage["preces_2026-03-01"] removido (era: ' + (preces2026_03_01 ? 'cached' : 'não existia') + ')', 'success');
+    }
+
+    function inspectCache() {
+      const cacheKey = 'preces_2026-03-01';
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        try {
+          const data = JSON.parse(cached);
+          addLog('✓ Cache encontrado: oracao_eucaristica = ' + data.oracao_eucaristica, 'success');
+        } catch (e) {
+          addLog('✗ Cache inválido: ' + e.message, 'error');
+        }
+      } else {
+        addLog('ℹ Nenhum cache para preces_2026-03-01', 'info');
+      }
+    }
+
+    async function loadTestDate() {
+      clearLogs();
+      addLog('Iniciando teste com data: 01/03/2026', 'info');
+      addLog('JSON esperado em: /preces_data/preces_2026-03-01.json', 'info');
+      addLog('Esperado: "oracao_eucaristica": "II"', 'info');
+      addLog('---', 'info');
+      
+      // Simular load do JSON
+      try {
+        const r = await fetch('preces_data/preces_2026-03-01.json');
+        if (r.ok) {
+          const data = await r.json();
+          addLog(`✓ JSON carregado com sucesso`, 'success');
+          addLog(`  - oracao_eucaristica: "${data.oracao_eucaristica}"`, 'info');
+          addLog(`  - resposta: "${data.resposta}"`, 'info');
+          addLog(`  - intencoes: ${data.intencoes.length} items`, 'info');
+        } else {
+          addLog(`✗ Erro ao carregar JSON: HTTP ${r.status}`, 'error');
+        }
+      } catch (e) {
+        addLog(`✗ Erro na requisição: ${e.message}`, 'error');
+      }
+    }
+
+    addLog('Debug Test carregado. Clique em "Carregar 01/03/2026" para testar.', 'success');
+  </script>
+</body>
+</html>

@@ -66,16 +66,20 @@
   async function fetchPrecesJSON(date) {
     const iso = fmtISO(date);
     const cacheKey = `preces_${iso}`;
+    console.log('[fetchPrecesJSON] Data:', iso, '| Cache key:', cacheKey);
 
     // 1. Tentar arquivo local preces_data/
     try {
       const r = await fetch(`preces_data/preces_${iso}.json`, { signal: AbortSignal.timeout(3000) });
       if (r.ok) {
         const data = await r.json();
+        console.log('[fetchPrecesJSON] ✓ Arquivo local carregado:', iso, '| OE:', data.oracao_eucaristica);
         try { localStorage.setItem(cacheKey, JSON.stringify(data)); } catch (e) { }
         return data;
       }
-    } catch (e) { }
+    } catch (e) {
+      console.warn('[fetchPrecesJSON] ✗ Erro ao buscar arquivo local:', iso, e.message);
+    }
 
     // 2. Tentar API do preces_server.py
     try {
@@ -83,18 +87,28 @@
       if (r.ok) {
         const data = await r.json();
         if (!data.error) {
+          console.log('[fetchPrecesJSON] ✓ API retornou:', iso, '| OE:', data.oracao_eucaristica);
           try { localStorage.setItem(cacheKey, JSON.stringify(data)); } catch (e) { }
           return data;
         }
       }
-    } catch (e) { }
+    } catch (e) {
+      console.warn('[fetchPrecesJSON] ✗ Erro ao buscar API:', iso, e.message);
+    }
 
     // 3. Cache local
     try {
       const cached = localStorage.getItem(cacheKey);
-      if (cached) return JSON.parse(cached);
-    } catch (e) { }
+      if (cached) {
+        const data = JSON.parse(cached);
+        console.log('[fetchPrecesJSON] ✓ Retornado do localStorage:', iso, '| OE:', data.oracao_eucaristica);
+        return data;
+      }
+    } catch (e) {
+      console.warn('[fetchPrecesJSON] ✗ Erro ao ler cache localStorage:', e.message);
+    }
 
+    console.warn('[fetchPrecesJSON] ✗ Nenhum JSON encontrado para:', iso);
     return null;
   }
 
@@ -173,36 +187,59 @@
   // Carrega preces: tenta JSON do crawler, senão gera inline
   async function loadPreces(data) {
     const el = $('#precesContent');
+    console.log('[loadPreces] Iniciando... data ISO:', fmtISO(currentDate));
+    
     // Tenta carregar do crawler JSON
     const precesJSON = await fetchPrecesJSON(currentDate);
+    console.log('[loadPreces] fetchPrecesJSON retornou:', precesJSON ? 'dados' : 'null');
+    
     if (precesJSON && precesJSON.resposta && precesJSON.intencoes) {
       el.innerHTML = renderPrecesFromJSON(precesJSON);
-      console.log('Preces carregadas do crawler:', precesJSON.fonte || 'cache');
+      console.log('[loadPreces] ✓ Preces carregadas do JSON | Fonte:', precesJSON.fonte || 'cache', '| OE especificada:', precesJSON.oracao_eucaristica);
+      
       // Atualizar Oração Eucarística se especificada no JSON
       if (precesJSON.oracao_eucaristica) {
+        console.log('[loadPreces] ➤ Chamando setOracaoEucaristica com:', precesJSON.oracao_eucaristica);
         setOracaoEucaristica(precesJSON.oracao_eucaristica);
+      } else {
+        console.warn('[loadPreces] ⚠ JSON carregado mas SEM oracao_eucaristica!');
       }
       return;
     }
+    
     // Fallback inline
+    console.log('[loadPreces] ✗ JSON inválido ou incompleto, usando fallback inline');
     el.innerHTML = getPrecesFallback(data);
-    console.log('Preces: usando fallback inline');
+    
     // Default OE III para Quaresma, II para outros tempos
-    setOracaoEucaristica(isQuaresma(currentDate) ? 'III' : 'II');
+    const oeDefault = isQuaresma(currentDate) ? 'III' : 'II';
+    console.log('[loadPreces] Fallback: setOracaoEucaristica com default:', oeDefault);
+    setOracaoEucaristica(oeDefault);
   }
 
   // ===== ORAÇÃO EUCARÍSTICA DINÂMICA =====
   function setOracaoEucaristica(num) {
     const titulo = $('#oeTitulo');
     const content = $('#oeContent');
+    console.log('[setOracaoEucaristica] Chamado com num:', num, '| tipo:', typeof num, '| titulo element:', titulo ? 'existe' : 'NÃO EXISTE', '| content element:', content ? 'existe' : 'NÃO EXISTE');
+    
     if (!content) {
       // Se não existe container dinâmico, atualiza só o título
-      if (titulo) titulo.textContent = `Oração Eucarística ${num}`;
+      console.log('[setOracaoEucaristica] ⚠ Sem container #oeContent, apenas atualizando título');
+      if (titulo) {
+        titulo.textContent = `Oração Eucarística ${num}`;
+        console.log('[setOracaoEucaristica] Título atualizado para:', `Oração Eucarística ${num}`);
+      }
       return;
     }
-    if (titulo) titulo.textContent = `Oração Eucarística ${num}`;
+    
+    if (titulo) {
+      titulo.textContent = `Oração Eucarística ${num}`;
+      console.log('[setOracaoEucaristica] ✓ Título atualizado para: Oração Eucarística', num);
+    }
+    
     content.innerHTML = getOracaoEucaristica(num);
-    console.log(`Oração Eucarística ${num} carregada`);
+    console.log('[setOracaoEucaristica] ✓ Conteúdo HTML atualizado para OE', num);
   }
 
   function getOracaoEucaristica(num) {
@@ -447,8 +484,9 @@
     c.appendChild(alt);
   }
 
-  function render(data, offline) {
+  async function render(data, offline) {
     liturgyData = data;
+    console.log('[render] ✓ Iniciado render()');
 
     // Date
     $('#datePicker').value = fmtISO(currentDate);
@@ -571,9 +609,10 @@
     }
 
     // Preces (async - tenta JSON do crawler primeiro)
-    // Inicializa OE III como padrão (atualizado pelo crawler JSON se disponível)
-    setOracaoEucaristica('III');
-    loadPreces(data);
+    // ⚠ IMPORTANTE: aguardar loadPreces() para garantir que OE seja corretamente carregada do JSON
+    console.log('[render] ➤ render: chamando loadPreces() com AWAIT');
+    await loadPreces(data);
+    console.log('[render] ✓ loadPreces() completou');
 
     // Oferendas
     $('#oracaoOferendas').innerHTML = esc(data.oferendas || '');
@@ -598,7 +637,7 @@
     content.style.pointerEvents = 'none';
 
     const { data, offline } = await fetchLiturgy(currentDate);
-    render(data, offline);
+    await render(data, offline);
 
     content.style.opacity = '1';
     content.style.pointerEvents = '';

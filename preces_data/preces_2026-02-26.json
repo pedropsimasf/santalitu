@@ -1,0 +1,37 @@
+{
+  "data": "2026-02-26",
+  "domingo": "5ª feira da 1ª Semana da Quaresma",
+  "ano_liturgico": "B",
+  "ciclo": "quaresma",
+  "cor": "Roxo",
+  "fonte": "gerado_automatico",
+  "resposta": "Senhor, escutai a nossa prece.",
+  "intencoes": [
+    {
+      "numero": 1,
+      "tema": "Pela Igreja",
+      "texto": "Pelo Papa, pelos bispos e por todo o clero: para que sejam sustentados pela Palavra de Deus e conduzam o povo com fidelidade neste tempo de conversão. Rezemos ao Senhor."
+    },
+    {
+      "numero": 2,
+      "tema": "Pelos governantes",
+      "texto": "Pelos governantes e por todos os que exercem autoridade: para que promovam a justiça, a paz e o bem comum, especialmente para os mais pobres e necessitados. Rezemos ao Senhor."
+    },
+    {
+      "numero": 3,
+      "tema": "Pelos catecúmenos",
+      "texto": "Pelos catecúmenos e por todos os que se preparam para celebrar a Páscoa: para que sejam conduzidos pela Palavra e pelo Espírito e recebam a graça de vencer as tentações. Rezemos ao Senhor."
+    },
+    {
+      "numero": 4,
+      "tema": "Pela comunidade",
+      "texto": "Pela nossa comunidade e por todas as famílias: para que a vivência da Campanha da Fraternidade nos leve a superar a indiferença e a abrir o coração aos irmãos mais necessitados. Rezemos ao Senhor."
+    },
+    {
+      "numero": 5,
+      "tema": "Por nós",
+      "texto": "Por todos nós aqui reunidos: para que, seguindo o exemplo de Cristo no deserto, saibamos resistir às tentações pela oração, pelo jejum e pela caridade. Rezemos ao Senhor."
+    }
+  ],
+  "atualizado_em": "2026-02-26T09:54:21.460145"
+}

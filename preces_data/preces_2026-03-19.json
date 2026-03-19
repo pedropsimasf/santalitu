@@ -1,0 +1,37 @@
+{
+  "data": "2026-03-19",
+  "domingo": "São José, Esposo da Bem-Aventurada Virgem Maria, Solenidade",
+  "ano_liturgico": "B",
+  "ciclo": "tempo_comum",
+  "cor": "Branco",
+  "fonte": "gerado_automatico",
+  "resposta": "Senhor, escutai a nossa prece.",
+  "intencoes": [
+    {
+      "numero": 1,
+      "tema": "Pela Igreja",
+      "texto": "Pela Santa Igreja de Deus, pelo Papa e por todos os pastores: para que, guiados pelo Espírito Santo, sejam sempre fiéis à missão de anunciar o Evangelho. Rezemos ao Senhor."
+    },
+    {
+      "numero": 2,
+      "tema": "Pelos governantes",
+      "texto": "Pelos governantes e por todos os que exercem autoridade: para que promovam a justiça, a paz e o bem comum. Rezemos ao Senhor."
+    },
+    {
+      "numero": 3,
+      "tema": "Pelos que sofrem",
+      "texto": "Pelos que sofrem, pelos doentes, pelos que perderam entes queridos e por todos os necessitados: para que encontrem no Senhor consolo e esperança. Rezemos ao Senhor."
+    },
+    {
+      "numero": 4,
+      "tema": "Pela comunidade",
+      "texto": "Por nossa comunidade: para que vivamos na fé, na caridade e na comunhão fraterna. Rezemos ao Senhor."
+    },
+    {
+      "numero": 5,
+      "tema": "Por nós",
+      "texto": "Por todos nós aqui reunidos: para que esta celebração eucarística nos fortaleça no caminho da santidade e do serviço ao próximo. Rezemos ao Senhor."
+    }
+  ],
+  "atualizado_em": "2026-03-19T09:50:09.641647"
+}

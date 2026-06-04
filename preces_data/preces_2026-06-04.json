@@ -1,0 +1,33 @@
+{
+  "data": "2026-06-04",
+  "domingo": "Santíssimo Corpo e Sangue de Cristo, Solenidade",
+  "ano_liturgico": "B",
+  "ciclo": "tempo_comum",
+  "cor": "Branco",
+  "fonte": "Diocese da Campanha",
+  "oracao_eucaristica": "III",
+  "resposta": "Alimentai-nos, Senhor, com a Palavra e com a Eucaristia!",
+  "intencoes": [
+    {
+      "numero": 1,
+      "tema": "Intencao 1",
+      "texto": "Cristo, Filho do Deus vivo, que pedistes que celeb- rássemos a Eucaristia em vossa memória, renovai a Igreja, para que seja sempre mais a vossa fiel teste- munha, rezemos:"
+    },
+    {
+      "numero": 2,
+      "tema": "Intencao 2",
+      "texto": "Cristo, sacerdote da Eterna Aliança, que confiastes aos sacerdotes a oferenda da Eucaristia, concedei- -lhes permanentemente viver o que celebram no sa- cramento, rezemos:"
+    },
+    {
+      "numero": 3,
+      "tema": "Intencao 3",
+      "texto": "Cristo, Pão da vida eterna, que dissestes, “dai-lhes vós mesmos de comer”, tornai nossa sociedade sensível à realidade dos que vivem na pobreza, rezemos:"
+    },
+    {
+      "numero": 4,
+      "tema": "Intencao 4",
+      "texto": "Cristo, que abençoastes os pães e os peixes para saciar a fome dos necessitados, concedei que seja- mos sinais de consolação para os doentes, de per- dão para os pecadores e de coragem para os desa- nimados, rezemos:"
+    }
+  ],
+  "atualizado_em": "2026-06-04T11:56:40.632827"
+}
